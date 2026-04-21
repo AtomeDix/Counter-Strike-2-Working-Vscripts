@@ -1,0 +1,27 @@
+// scripts/ai/uLLeticaL/aim_botz/bt_adada_01.kv3
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	//config = "scripts/ai/deathmatch/bt_config.kv3"
+	config = "scripts/ai/uLLeticaL/aim_botz/bt_config.kv3"
+	root =
+	{
+		type = "decorator_repeat"
+		child =
+		{
+			type = "parallel"
+			children =
+			[
+				{
+					type = "subtree"
+					file = "scripts/ai/uLLeticaL/aim_botz/modules/btm_look_at_enemy_human_player.kv3"
+					name = "LookAtEnemyHumanPlayer"
+				},
+				{
+					type = "subtree"
+					file = "scripts/ai/uLLeticaL/aim_botz/modules/btm_jump_01_seq.kv3"
+					name = "MovementJump_01"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,173 @@
+// scripts/ai/uLLeticaL/aim_botz/bt_default.kv3
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+	{
+		//config = "scripts/ai/deathmatch/bt_config.kv3"
+		config = "scripts/ai/uLLeticaL/aim_botz/bt_config.kv3"
+		root =
+		{
+
+			type = "decorator_bot_service"
+			memory_to_expire =
+			[
+				{
+					key = "ShortTermAttackMemory"
+					time = 0.7
+					distance = 0
+				},
+				{
+					key = "LongTermMemory"
+					time = 10
+					distance = 500
+				},
+				{
+					key = "ShortTermInvestigateMemory"
+					time = 3
+					distance = 200
+				}
+			]
+			child =
+			{
+
+				type = "parallel"
+				children =
+				[
+					{
+						type = "decorator_run_once"
+						max_attempts = 3
+						child =
+						{
+							type = "decorator_sensor"
+							shape =
+							{
+								type = "sensor_shape_sphere"
+								radius = 32
+							}
+							entity_type_filter = "CLASSNAME"
+							//orphan_only = 1
+							output = "Spawnpoint"
+							class_name = "info_player_terrorist"
+							priority = 1
+							child = 
+							{
+								type = "condition_is_empty"
+								input = "Spawnpoint"
+								negated = 1
+								child =
+								{
+									type = "action_select_areas_within_radius"
+									input = "Spawnpoint"
+									radius = "16"
+									output = "SpawnpointSurroundingAreas"
+								}
+							}
+						}
+					},
+					{
+						type = "decorator_run_once"
+						max_attempts = 3
+						child =
+						{
+							type = "decorator_sensor"
+							shape =
+							{
+								type = "sensor_shape_sphere"
+								radius = 140
+							}
+							entity_type_filter = "CLASSNAME"
+							//orphan_only = 1
+							output = "Movepoint"
+							class_name = "logic_navigation"
+							priority = 1
+							child = 
+							{
+								type = "condition_is_empty"
+								input = "Movepoint"
+								negated = 1
+								child =
+								{
+									type = "action_select_areas_within_radius"
+									input = "Movepoint"
+									radius = "8"
+									output = "MovepointSurroundingAreas"
+								}
+							}
+						}
+					},
+
+
+					{
+						type = "decorator_repeat"
+						child =
+						{
+							type = "parallel"
+							children =
+							[
+								{
+									type = "subtree"
+									file = "scripts/ai/uLLeticaL/aim_botz/modules/btm_look_at_enemy_human_player.kv3"
+									name = "LookAtEnemyHumanPlayer"
+								}
+							]
+						}
+					},
+					{
+						type = "decorator_repeat"
+						child =
+						{
+							type = "sequencer"
+							children =
+							[
+								//
+								{
+									type = "decorator_wait_success"
+									timeout = 5
+									child =
+									{
+										type = "action_move_to"
+										destination = "Spawnpoint"
+										//destination = "SpawnpointSurroundingAreas"
+										movement_type = "BT_ACTION_MOVETO_RUN"
+										route_type = "BT_ACTION_MOVETO_FASTEST_ROUTE"
+										//hiding_spot = "HidingSpot"
+										//threat = "NearestThreatMemory"
+										auto_look_adjust = 0
+									}
+								},
+								{
+									type = "action_wait"
+									wait_time_min = 1.5
+									wait_time_max = 1.5
+								},
+								//
+
+								//
+								{
+									type = "decorator_wait_success"
+									timeout = 5
+									child =
+									{
+										type = "action_move_to"
+										//destination = "Movepoint"
+										destination = "MovepointSurroundingAreas"
+										movement_type = "BT_ACTION_MOVETO_RUN"
+										route_type = "BT_ACTION_MOVETO_FASTEST_ROUTE"
+										//hiding_spot = "HidingSpot"
+										//threat = "NearestThreatMemory"
+										auto_look_adjust = 0
+									}
+								},
+								{
+									type = "action_wait"
+									wait_time_min = 1.5
+									wait_time_max = 1.5
+								}
+								//
+							]
+						}
+					}
+				]
+
+			}
+		}
+	}
+	

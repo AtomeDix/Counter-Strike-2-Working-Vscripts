@@ -1,0 +1,49 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+    // parallel		Executes all child functions in one script tick.
+	// selector		Executes child functions as sequence until meeting child with TRUE condition.
+	// sequencer	Executes child functions as sequence until meeting child with FALSE condition.
+	// subtree		Executes behavior tree from file.
+    type = "sequencer"
+    children =
+    [
+        {
+            type = "decorator_maybe"
+            chance = .50
+            child =
+            {
+                type = "action_jump"
+            }
+        },
+        {
+            type = "action_wait"
+            wait_time_min = 0.75
+            wait_time_max = 0.85
+        },
+        {
+            type = "decorator_maybe"
+            chance = .50
+            child =
+            {
+                type = "parallel"
+                children =
+                [
+                    {
+                        type = "action_jump"
+                    },
+                    {
+                        type = "action_crouch"
+                    }
+                ]
+            }
+        },
+        {
+            type = "action_wait"
+            wait_time_min = 0.75
+            wait_time_max = 0.85
+        },
+        {
+            type = "action_standup"
+        }
+    ]
+}

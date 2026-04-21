@@ -1,0 +1,19 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	config = "scripts/ai/ggp/ggp_config.kv3"
+	root =
+	{
+
+		type = "decorator_sensor"
+		entity_type_filter = "CLASSNAME"
+		output = "LookAt"
+		priority = 0
+		class_name = "env_spark"
+		child =
+		{
+			type = "action_aim"
+			input = "LookAt"
+		}
+
+	}
+}

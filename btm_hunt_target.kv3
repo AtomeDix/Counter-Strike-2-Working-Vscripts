@@ -1,0 +1,41 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	type = "decorator_sensor"
+	shape =
+	{
+		type = "sensor_shape_sphere"
+		radius = 13337
+	}
+
+	entity_type_filter = "CLASSNAME" 		// ALL, PLAYERS, HUMAN_PLAYERS, NOISE, DAMAGE, AREA_DAMAGE, CLASSNAME, GRENADE
+	// team_filter = "ENEMY" 				// ANY, CT, TERRORIST, SAME, OPPOSITE, ENEMY
+	class_name = "env_explosion"            // 
+	//orphan_only = 1
+	output = "HuntTarget"
+	priority = 1
+
+	child = 
+	{
+		type = "decorator_ranker_dist"
+		input = "HuntTarget"
+		child =
+		{
+			type = "decorator_picker_max_score"
+			input = "HuntTarget"
+			child =
+			{
+				type = "condition_is_empty"
+				input = "HuntTarget"
+				negated = 1
+				child =
+				{
+					type = "action_move_to"
+					destination = "HuntTarget"
+					movement_type = "BT_ACTION_MOVETO_RUN"
+					route_type = "BT_ACTION_MOVETO_FASTEST_ROUTE"
+					auto_look_adjust = 1
+				}
+			}
+		}
+	}
+}

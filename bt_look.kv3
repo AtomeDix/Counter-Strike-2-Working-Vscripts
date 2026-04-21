@@ -1,0 +1,35 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+/*------------------------*/
+/*_____look___at___me_____*/
+/*------------------------*/
+{
+	config = "scripts/ai/bt_xhair.kv3"
+	root =
+	{
+		type = "decorator_repeat"
+		child =
+		{
+			type = "selector"
+			children =
+			[
+				{
+					type = "decorator_sensor"
+					entity_type_filter = "HUMAN_PLAYERS"
+					output = "crashz"
+					priority = 0
+					child =
+					{
+						type = "condition_is_empty"
+						input = "crashz"
+						negated = 1
+						child =
+						{
+							type = "action_look_at"
+							input_location = "crashz"
+						}
+					}
+				}
+			]
+		}
+	}
+}
